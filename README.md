@@ -61,3 +61,4 @@ Furthermore you can profile specific components with the following:
 There are some things to consider
 - This library can encode `int` and `uint` as well as all their variations (i.e.: `int64`, `uint16`, ...) but it can only parse numbers of type `int`.
 - This library can only encode maps of type `map[string]interface{}` and slices of type `[]interface{}`.
+- Additional data after the initial parse will be ignored, unless another parse operation (such as `.AsList()`) is called on the same parser.
