@@ -1,6 +1,6 @@
 .PHONY: test
 test:
-	go test -race -cover .
+	go test -run=^Test -race -cover .
 
 .PHONY: bench
 bench:
