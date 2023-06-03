@@ -16,7 +16,7 @@ type bencodeReader interface {
 	readByte() (byte, error)
 	// Backtracks by 1 byte
 	//
-	// MUST only be called at most once after a call to nextByte()
+	// MUST only be called at most once immediately following a call to nextByte()
 	undoReadByte()
 	// Reads a number until an end byte
 	readIntTo(separator byte) (int, error)

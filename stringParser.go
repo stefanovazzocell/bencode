@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+// A bencode parser that uses a string as source
 type stringParser struct {
 	bencode string
 	i       int
@@ -22,7 +23,7 @@ func (sp *stringParser) readByte() (byte, error) {
 
 // Backtracks by 1 byte
 //
-// MUST only be called at most once after a call to nextByte()
+// MUST only be called at most once immediately following a call to nextByte()
 func (sp *stringParser) undoReadByte() {
 	sp.i--
 	if sp.i < 0 {
