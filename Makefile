@@ -8,6 +8,7 @@ bench:
 
 .PHONY: fuzz
 fuzz:
+	go test -run=^$$ -race -cover -fuzztime 1h -fuzz "FuzzReaderParser" .
 	go test -run=^$$ -race -cover -fuzztime 1h -fuzz "FuzzStringParser" .
 
 .PHONY: security
@@ -21,6 +22,7 @@ security:
 
 .PHONY: clean
 clean:
+	rm -rf testdata
 	rm -f *.out
 	go clean
 	go fmt
