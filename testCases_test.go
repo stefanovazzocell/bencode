@@ -129,8 +129,9 @@ var (
 		"torrentString": fedoraMagnet,
 		"complexMap":    complexMap,
 	}
-	parserBenchmarks = map[string]string{
-		"torrentString": fmt.Sprintf("%d:%s", len(fedoraMagnet), fedoraMagnet),
+	fedoraMagnetParsed = fmt.Sprintf("%d:%s", len(fedoraMagnet), fedoraMagnet)
+	parserBenchmarks   = map[string]string{
+		"torrentString": fedoraMagnetParsed,
 		"complexMap":    complexMapTranslated,
 	}
 )

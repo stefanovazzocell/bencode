@@ -9,7 +9,7 @@ import (
 )
 
 // Helper to automatically perform all testing
-func ParserTestingHelper(t *testing.T, testCase string, expected interface{}) {
+func StringParserTestHelper(t *testing.T, testCase string, expected interface{}) {
 	t.Logf("Test case: %q", testCase)
 	// Attempt parsing
 	actual, err := bencode.NewParserFromString(testCase).AsInterface()
@@ -63,19 +63,19 @@ func ParserTestingHelper(t *testing.T, testCase string, expected interface{}) {
 func TestStringParser(t *testing.T) {
 	// Test strings
 	for _, actual := range stringsTestCases {
-		ParserTestingHelper(t, fmt.Sprintf("%d:%s", len(actual), actual), actual)
+		StringParserTestHelper(t, fmt.Sprintf("%d:%s", len(actual), actual), actual)
 	}
 	// Test int
 	for test, actual := range intsTestCases {
-		ParserTestingHelper(t, test, actual)
+		StringParserTestHelper(t, test, actual)
 	}
 	// Test slices
 	for test, actual := range slicesTestCases {
-		ParserTestingHelper(t, test, actual)
+		StringParserTestHelper(t, test, actual)
 	}
 	// Test maps
 	for test, actual := range complexMapTestCases {
-		ParserTestingHelper(t, test, actual)
+		StringParserTestHelper(t, test, actual)
 	}
 	// Test Invalid Parse
 	for _, invalid := range invalidParserInputs {
@@ -128,6 +128,11 @@ func BenchmarkStringParser(b *testing.B) {
 			}
 		})
 	}
+	b.Run("torrentStringAsString", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			bencode.NewParserFromString(fedoraMagnetParsed).AsString()
+		}
+	})
 }
 
 func FuzzStringParser(f *testing.F) {
