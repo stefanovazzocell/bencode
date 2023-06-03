@@ -128,6 +128,10 @@ var (
 		"-1:abc",
 		"di3e-1:e",
 		"di3e-1:abce",
+		"0",
+		"123",
+		"99999999999",
+		"+100000000000000000:0",
 	}
 	invalidTypeParse = map[string]byte{
 		"":       byte('x'),

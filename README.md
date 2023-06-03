@@ -41,6 +41,7 @@ Since this library contains a parser that might be used to read user-generated c
 - Near-100% code coverage (`make test`, coverage: up_to* 96.1%).
 - Extensively fuzzed (`make fuzz`, coverage: 99.3%).
 - Checked for security issues with [`gosec`](https://github.com/securego/gosec) (`make security`).
+- No external dependencies
 
 *up_to: one of the tests uses an intentionally unreliable `io.Reader`.
 
@@ -75,3 +76,4 @@ There are some things to consider
 - This library can encode `int` and `uint` as well as all their variations (i.e.: `int64`, `uint16`, ...) but it can only parse numbers of type `int`.
 - This library can only encode maps of type `map[string]interface{}` and slices of type `[]interface{}`.
 - Additional data after the initial parse will be ignored, unless another parse operation (such as `.AsList()`) is called on the same parser.
+- When parsing io.Reader strings are limited to ~8MB of size max.

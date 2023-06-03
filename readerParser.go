@@ -8,13 +8,17 @@ import (
 )
 
 const (
-	bufferSize    = 1024
-	minBufferSize = 22 // The minimum buffer size to ~ store a number
-	maxEmptyReads = 100
+	bufferSize      = 1024
+	minBufferSize   = 22 // The minimum buffer size to ~ store a number
+	maxEmptyReads   = 100
+	MaxStringLength = 2 << 22 // ~ 8MB
 )
 
 var (
+	// Only called by panic() when n, _ = io.Reader.Read(); n < 0
 	ErrNegativeRead = errors.New("readerParser: reader returned a negative read")
+	// Error returned if a string length is larger than 8MB (to avoid this use stringParser instead)
+	ErrLargeStringLen = errors.New("readerParser: string length are limited to ~8MB for security reasons")
 )
 
 // A bencode reader that uses an io.Reader as source
@@ -104,6 +108,10 @@ func (rp *readerParser) readIntTo(separator byte) (int, error) {
 
 // Returns a string of a given length
 func (rp *readerParser) readString(length int) (string, error) {
+	// Check if length is reasonable
+	if length > MaxStringLength {
+		return "", ErrLargeStringLen
+	}
 	// Try to get from buffer
 	lb := rp.buffered()
 	if rp.buffered() >= length {
